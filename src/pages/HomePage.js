@@ -1,9 +1,9 @@
 import React,{Component} from "react";
 
-export default class Main extends Component{
+export default class HomePage extends Component{
     render(){
         return(
-                <main>
+                <>
                     <h1>Category name</h1>
                     <section>
                         <h2>Main Component</h2>
@@ -16,7 +16,7 @@ export default class Main extends Component{
                             <li>Product 6</li>
                         </ul>
                     </section>
-                </main>
+                </>
         )
     }
 }
