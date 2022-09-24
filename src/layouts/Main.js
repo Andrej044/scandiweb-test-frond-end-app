@@ -1,11 +1,22 @@
 import React,{Component} from "react";
-import HomePage from "../pages/HomePage";
+import {Routes, Route} from "react-router-dom";
+
+import AllPage from "../pages/AllPage";
+import ClothesPage from "../pages/ClothesPage";
+import TechPage from "../pages/TechPage";
+
+
 
 export default class Main extends Component{
     render(){
         return(
                 <main>
-                    <HomePage/>
+                    <Routes>
+                       <Route path = "/" element={<AllPage dataCategories = {this.props}/>}/>
+                       <Route path = "/all" element={<AllPage dataCategories = {this.props}/>}/>
+                       <Route path = "/clothes" element={<ClothesPage dataCategories = {this.props}/>}/>
+                       <Route path = "/tech" element={<TechPage dataCategories = {this.props}/>}/>
+                    </Routes>
                 </main>
         )
     }
