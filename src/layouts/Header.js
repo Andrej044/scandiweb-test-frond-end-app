@@ -1,6 +1,8 @@
 import React,{Component} from "react";
 import {NavLink} from "react-router-dom";
-import logo from "../images/logo.svg"
+import logo from "../images/logo.svg";
+import cart from "../images/empty_cart.svg";
+
 import CurrencySwitcher from "../components/CurrencySwitcher";
 
 
@@ -29,7 +31,9 @@ export default class Header extends Component{
                  <div className="currencySwitcher">
                      <CurrencySwitcher currencies = {currencyList} currencyChanger = {currencyChanger} state = {this.props.data} />
                  </div>
-
+                <span>
+                    <img src={cart} width="20" height="20" alt="cart icon" title="cart icon"/>
+                </span>
             </nav>
         </header>
         )
