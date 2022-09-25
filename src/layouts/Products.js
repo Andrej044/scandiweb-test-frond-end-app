@@ -2,16 +2,25 @@ import React,{Component} from "react";
 
 
 export default class Products extends Component{
+
+    findCurrency = (arr = [], findElement) => {
+      let findedCurrency =  arr.filter(item=>{
+          if(item.currency.label === findElement) return item
+        })
+        return findedCurrency
+    }
     render() {
+            const {currency} = this.props.currency
             let products = this.props.categoryName[0] === undefined ?  [] : this.props.categoryName[0].products
-        console.log(products)
-            const productList = products.map(product => (
-                <div key= { product.id} className="card">
-                    <img src= {product.gallery[0]} alt=""/>
-                    <p>{product.name}</p>
-                    <p>{product.prices[0].amount}<span>{product.prices[0].currency.symbol}</span></p>
-                </div>
-            ))
+            const productList = products.map(product => {
+              const currentCurrency =  this.findCurrency(product.prices, currency.label);
+                  return (
+                      <div key= { product.id} className="card">
+                        <img src= {product.gallery[0]} alt=""/>
+                        <p>{product.name}</p>
+                        <p>{currentCurrency[0].amount}<span>{currentCurrency[0].currency.symbol}</span></p>
+                    </div>)
+    })
 
 
         return(
