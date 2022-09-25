@@ -1,24 +1,37 @@
 import React, {Component} from "react";
 import {gql} from "@apollo/client";
+import {BrowserRouter} from "react-router-dom";
 
 import Header from "./layouts/Header";
 import Main from "./layouts/Main";
 
 
 export default class App extends Component{
-  constructor(props){
-    super(props)
-    this.state={
-      dataProducts:[]
+    state = {
+        dataCategories: [],
+        dataCurrencies: [],
+        isModal:false,
+        currencies: {
+            label: "USD",
+            symbol: "$",
+        }
+      }
+
+    handleCurrencyChange = (currencyLabel, currencySymbol) => {
+        this.setState({
+           currencies : {
+               label:currencyLabel,
+               symbol:currencySymbol
+           }
+        })
     }
-  }
-  componentDidMount() {
-    const {client} = this.props;
-    client
-        .query({
-          query: gql`
-            query Query {
- categories{
+
+    componentDidMount() {
+      this.props.client
+          .query({
+              query:gql`
+              query{
+               categories{
   name
   products{
     id
@@ -47,25 +60,54 @@ export default class App extends Component{
     brand 
   }
 } 
- 
-currencies{
-    label
-    symbol
+ category{
+  name
+  products{
+    id
+    name
+    inStock
+    gallery
+    description
+    category
+    attributes{
+      id
+      name
+      type
+      items{
+        displayValue
+        value
+        id
+      }
+    }
+    prices{
+      currency{
+        label
+        symbol
+      }
+      amount
+    }
+    brand 
   }
-            }`
-        })
-        .then(result => this.setState({
-            dataProducts: result.data
-        }))
+} 
+currencies{
+  label
+  symbol
+}}`
+          })
+          .then(result => {
+              this.setState({
+                  dataCategories: result.data.categories,
+                  dataCurrencies: result.data.currencies
+              })
+          })
   }
     render(){
-      console.log(this.state.dataProducts)
-      const {categories, currencies} = this.state.dataProducts
         return(
-          <>
-            <Header/>
-            <Main/>
-          </>
+          <BrowserRouter>
+            <Header data= {this.state} currencyChanger={this.handleCurrencyChange} />
+            <h1 className="visualy-hidden">Online shop Scandiweb</h1>
+            <Main data= {this.state.dataCategories} currency={this.state.currencies}/>
+          </BrowserRouter>
         )
   }
 }

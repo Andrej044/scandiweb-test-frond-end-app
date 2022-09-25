@@ -8,7 +8,7 @@ export default class AllPage extends Component{
         })
         return(
                 <>
-                    <Products categoryName= {categoryAll}/>
+                    <Products categoryName= {categoryAll} currency = {this.props.dataCategories}/>
                 </>
         )
     }

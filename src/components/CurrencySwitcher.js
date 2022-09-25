@@ -6,29 +6,43 @@ export default class CurrencySwitcher extends Component {
     }
     handleShowOn = () => {
         this.setState({
-            isShow:true
+            isShow: true
         })
     }
-    handleShowOff = () => {
-        this.setState({
-            isShow:false
-        })
+
+    listener = (event) => {
+        const elem = document.querySelector(".currency-item:first-child");
+        const span = document.querySelector(".currency__visible")
+
+        if(event.target === elem){
+            this.setState({
+                isShow:false
+            })
+        } else if(event.target != span) {
+            this.setState({
+                isShow:false
+            })
+        }
     }
-    handleOff = () => {
-        this.setState({isShow:false})
+    componentDidMount() {
+        document.addEventListener("click", this.listener)
+    }
+
+    componentWillUnmount() {
+        document.addEventListener("click", this.listener)
     }
 
     render(){
         const currencyChanger = this.props.currencyChanger;
         const {symbol:currencySymbol} = this.props.state.currencies;
 
-        const currenciesList = this.props.currencies.map(currency => (
+        const currenciesList = this.props.currencies.map((currency,index) => (
             <li
                 className="currency-item"
                 onClick={() => {
                 currencyChanger(currency.currencyLabel,currency.currencySymbol );
-                this.handleShowOff();
                 }}
+                id = {index}
                 key= {currency.currencyLabel}
                 value={currency.currencyLabel}
             >
@@ -38,7 +52,7 @@ export default class CurrencySwitcher extends Component {
 
         return(
             <>
-                <span onClick= {this.handleShowOn}>{currencySymbol}</span>
+                <span className="currency__visible" onClick= {this.handleShowOn}>{currencySymbol}</span>
                 {this.state.isShow ? <ul className="currencySwitcher">{currenciesList}</ul> : null }
             </>
         )
