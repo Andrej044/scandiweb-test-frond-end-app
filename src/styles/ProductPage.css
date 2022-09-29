@@ -1,0 +1,13 @@
+
+.product-page{
+    display: flex;
+}
+.product-thumbnail img{
+    width: 15vw;
+    height: 15vw;
+}
+
+.product-page__main-photo{
+    width: 35vw;
+    height: 35vw;
+}
