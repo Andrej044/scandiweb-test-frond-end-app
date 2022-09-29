@@ -24,14 +24,17 @@ export default class ProductPage extends Component{
         })
         return findProduct
     }
-    changePhotoHandler = () => {
-        console.log("work")
+    changePhotoHandler = (e) => {
+        const src = e.target.getAttribute("src");
+        this.setState({
+            photoSrc : src
+        })
     }
     render() {
         const  findProduct = this.getProductByPathName();
         const photoThumbnails = findProduct[0] === undefined ? (<li>Photo not found</li>) : findProduct[0].gallery.map((photoUrl, index) => (
-            <li className="product-thumbnail" key={index} onClick={this.changePhotoHandler}>
-                <img src={photoUrl} alt=""/>
+            <li className="product-thumbnail" key={index} >
+                <img onClick={this.changePhotoHandler} src={photoUrl} alt=""/>
             </li>
         ))
 
