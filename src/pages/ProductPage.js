@@ -1,48 +1,62 @@
 import React,{Component} from "react";
 
 import SizePicker from "../components/SizePicker";
+import ColorPicker from "../components/ColorPicker";
+import  "../styles/ProductPage.css"
 
 export default class ProductPage extends Component{
-
+    state= {
+        photoSrc: "",
+    }
+    componentDidMount() {
+        const product = this.getProductByPathName();
+        const productImage = product[0] === undefined ?  [] : product[0].gallery;
+        this.setState({
+            photoSrc: productImage[0],
+        })
+    }
+    getProductByPathName = () => {
+        const indexForCut = window.location.pathname.lastIndexOf("/");
+        const productPathId = window.location.pathname.slice(indexForCut+1);
+        const products = this.props.dataCategories.data[0] === undefined ?  [] : this.props.dataCategories.data[0].products;
+        const  findProduct = products.filter((product) => {
+            return product.id === productPathId
+        })
+        return findProduct
+    }
+    changePhotoHandler = () => {
+        console.log("work")
+    }
     render() {
+        const  findProduct = this.getProductByPathName();
+        const photoThumbnails = findProduct[0] === undefined ? (<li>Photo not found</li>) : findProduct[0].gallery.map((photoUrl, index) => (
+            <li className="product-thumbnail" key={index} onClick={this.changePhotoHandler}>
+                <img src={photoUrl} alt=""/>
+            </li>
+        ))
+
         return (
-            <div>
+            <div className="product-page">
                 <aside>
                     <nav>
                         <ul>
-                            <li>image-tumb</li>
-                            <li>image-tumb</li>
-                            <li>image-tumb</li>
+                            {photoThumbnails}
                         </ul>
                     </nav>
                 </aside>
                 <section>
-                    <img src="" alt=""/>
+                    <div className="product-page__main-photo">
+                        <img src={this.state.photoSrc} alt=""/>
+                    </div>
                 </section>
                 <section>
                     <h2>Brand</h2>
                     <h2>Title</h2>
                     <SizePicker/>
-                    <div className="colorPicker">
-                        <h3>Color:</h3>
-                        <form>
-                            <label>
-                                Green
-                                <input type="radio" value="green" name="color"/>
-                            </label>
-                            <label>
-                                Red
-                                <input type="radio" value="red" name="color"/>
-                            </label>
-                            <label>
-                                Blue
-                                <input type="radio" value="blue" name="color"/>
-                            </label>
-                        </form>
-                    </div>
+                    <ColorPicker/>
                     <div className="price">
                         <h3>Price:</h3>
-                        <p>50%</p>
+                        <p>50$</p>
                     </div>
                     <button>Add to card</button>
                     <p>Description</p>
