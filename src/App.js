@@ -14,7 +14,9 @@ export default class App extends Component{
         currencies: {
             label: "USD",
             symbol: "$",
-        }
+        },
+        sizePicker:"null",
+        colorPicker:"null"
       }
 
     handleCurrencyChange = (currencyLabel, currencySymbol) => {
@@ -106,7 +108,10 @@ currencies{
           <BrowserRouter>
             <Header data= {this.state} currencyChanger={this.handleCurrencyChange} />
             <h1 className="visualy-hidden">Online shop Scandiweb</h1>
-            <Main data= {this.state.dataCategories} currency={this.state.currencies}/>
+            <Main
+                data= {this.state.dataCategories}
+                currency={this.state.currencies}
+            />
           </BrowserRouter>
         )
   }
