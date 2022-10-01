@@ -35,21 +35,21 @@ export default class ProductPage extends Component{
     }
 
     render() {
+        const {findCurrency, currency} = this.props.dataCategories;
         const  findedProduct = this.getProductByPathName();
         const photoThumbnails = findedProduct[0] === undefined ? (<li>Photo not found</li>) : findedProduct[0].gallery.map((photoUrl, index) => (
             <li className="product-thumbnail" key={index} >
                 <img onClick={this.changePhotoHandler} src={photoUrl} alt=""/>
             </li>
         ));
-        //
         // console.log(findedProduct[0]);
         // console.log(this.props)
 
         const brand = findedProduct[0] === undefined ? "Brand not found" : findedProduct[0].brand;
         const name = findedProduct[0] === undefined ? "Name not found" : findedProduct[0].name;
         const describe = findedProduct[0] === undefined ? (<p>Describe not found</p>) : findedProduct[0].description;
-        const price = findedProduct[0] === undefined ? ["Price not found"] : this.props.dataCategories.findCurrency(findedProduct[0].prices, this.props.dataCategories.currency.label)
-        
+        const price = findedProduct[0] === undefined ? ["Price not found"] : findCurrency(findedProduct[0].prices, currency.label)
+
         return (
             <div className="product-page">
                 <aside>
@@ -71,7 +71,7 @@ export default class ProductPage extends Component{
                     <ColorPicker/>
                     <div className="price">
                         <h3>Price:</h3>
-                        <Price price={price}/>
+                        <Price price={price[0]}/>
                     </div>
                     <button>Add to card</button>
                 </section>
