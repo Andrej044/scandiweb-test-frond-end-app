@@ -27,6 +27,11 @@ export default class App extends Component{
            }
         })
     }
+    findCurrency = (arr = [], findElement) => {
+        return(arr.filter(item => {
+            if(item.currency.label === findElement) return item
+        }))
+    }
 
     componentDidMount() {
       this.props.client
@@ -111,6 +116,7 @@ currencies{
             <Main
                 data= {this.state.dataCategories}
                 currency={this.state.currencies}
+                findCurrency={this.findCurrency}
             />
           </BrowserRouter>
         )
