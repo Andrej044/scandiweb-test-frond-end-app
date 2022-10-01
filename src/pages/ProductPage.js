@@ -2,10 +2,12 @@ import React,{Component} from "react";
 
 import SizePicker from "../components/SizePicker";
 import ColorPicker from "../components/ColorPicker";
+import Price from "../components/Price";
 import  "../styles/ProductPage.css"
 
+
 export default class ProductPage extends Component{
-    state= {
+    state = {
         photoSrc: "",
     }
     componentDidMount() {
@@ -24,20 +26,30 @@ export default class ProductPage extends Component{
         })
         return findProduct
     }
+
     changePhotoHandler = (e) => {
         const src = e.target.getAttribute("src");
         this.setState({
             photoSrc : src
         })
     }
+
     render() {
-        const  findProduct = this.getProductByPathName();
-        const photoThumbnails = findProduct[0] === undefined ? (<li>Photo not found</li>) : findProduct[0].gallery.map((photoUrl, index) => (
+        const  findedProduct = this.getProductByPathName();
+        const photoThumbnails = findedProduct[0] === undefined ? (<li>Photo not found</li>) : findedProduct[0].gallery.map((photoUrl, index) => (
             <li className="product-thumbnail" key={index} >
                 <img onClick={this.changePhotoHandler} src={photoUrl} alt=""/>
             </li>
-        ))
+        ));
+        //
+        // console.log(findedProduct[0]);
+        // console.log(this.props)
 
+        const brand = findedProduct[0] === undefined ? "Brand not found" : findedProduct[0].brand;
+        const name = findedProduct[0] === undefined ? "Name not found" : findedProduct[0].name;
+        const describe = findedProduct[0] === undefined ? (<p>Describe not found</p>) : findedProduct[0].description;
+        const price = findedProduct[0] === undefined ? ["Price not found"] : this.props.dataCategories.findCurrency(findedProduct[0].prices, this.props.dataCategories.currency.label)
+        
         return (
             <div className="product-page">
                 <aside>
@@ -53,16 +65,15 @@ export default class ProductPage extends Component{
                     </div>
                 </section>
                 <section>
-                    <h2>Brand</h2>
-                    <h2>Title</h2>
+                    <h2>{brand}</h2>
+                    <p>{name}</p>
                     <SizePicker/>
                     <ColorPicker/>
                     <div className="price">
                         <h3>Price:</h3>
-                        <p>50$</p>
+                        <Price price={price}/>
                     </div>
                     <button>Add to card</button>
-                    <p>Description</p>
                 </section>
             </div>
         )
