@@ -26,7 +26,9 @@ export default class Header extends Component{
                     {categoryList}
                 </ul>
                 <span>
-                    <img src={logo} width="31" height="30" alt="logo" title="logo"/>
+                    <NavLink to={"/all"}>
+                        <img src={logo} width="31" height="30" alt="logo" title="logo"/>
+                    </NavLink>
                 </span>
                  <div className="currencySwitcher">
                      <CurrencySwitcher currencies = {currencyList} currencyChanger = {currencyChanger} state = {this.props.data} />
