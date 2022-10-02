@@ -1,8 +1,9 @@
 import React,{Component} from "react";
-
 import SizePicker from "../components/SizePicker";
 import ColorPicker from "../components/ColorPicker";
 import Price from "../components/Price";
+import Attributes from "../layouts/Attributes";
+
 import  "../styles/ProductPage.css"
 
 
@@ -42,13 +43,15 @@ export default class ProductPage extends Component{
                 <img onClick={this.changePhotoHandler} src={photoUrl} alt=""/>
             </li>
         ));
-        // console.log(findedProduct[0]);
+        // console.log(findedProduct[0].attributes);
         // console.log(this.props)
 
         const brand = findedProduct[0] === undefined ? "Brand not found" : findedProduct[0].brand;
         const name = findedProduct[0] === undefined ? "Name not found" : findedProduct[0].name;
-        const describe = findedProduct[0] === undefined ? (<p>Describe not found</p>) : findedProduct[0].description;
-        const price = findedProduct[0] === undefined ? ["Price not found"] : findCurrency(findedProduct[0].prices, currency.label)
+        const description = findedProduct[0] === undefined ? (<p>Description not found</p>) : findedProduct[0].description;
+        const price = findedProduct[0] === undefined ? ["Price not found"] : findCurrency(findedProduct[0].prices, currency.label);
+        const attributes = findedProduct[0] === undefined ? [] : findedProduct[0].attributes;
+
 
         return (
             <div className="product-page">
@@ -67,13 +70,17 @@ export default class ProductPage extends Component{
                 <section>
                     <h2>{brand}</h2>
                     <p>{name}</p>
-                    <SizePicker/>
-                    <ColorPicker/>
+                    <Attributes attributes={attributes}/>
+                    {/*<SizePicker/>*/}
+                    {/*<ColorPicker/>*/}
+
                     <div className="price">
                         <h3>Price:</h3>
                         <Price price={price[0]}/>
                     </div>
                     <button>Add to card</button>
+
+                    <div className="description" dangerouslySetInnerHTML={{__html:description}}></div>
                 </section>
             </div>
         )
