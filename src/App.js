@@ -16,7 +16,8 @@ export default class App extends Component{
             symbol: "$",
         },
         sizePicker:"null",
-        colorPicker:"null"
+        colorPicker:"null",
+        cart: [],
       }
 
     handleCurrencyChange = (currencyLabel, currencySymbol) => {
@@ -31,6 +32,14 @@ export default class App extends Component{
         return(arr.filter(item => {
             if(item.currency.label === findElement) return item
         }))
+    }
+
+    addToCart = e => {
+        const cartArr = this.state.cart;
+        cartArr.push({})
+        this.setState({
+            cart: cartArr
+        })
     }
 
     componentDidMount() {
