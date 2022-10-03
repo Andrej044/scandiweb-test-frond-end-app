@@ -1,4 +1,4 @@
-import React, {Component, createElement} from "react";
+import React, {Component} from "react";
 
 export default class CurrencySwitcher extends Component {
     state = {
