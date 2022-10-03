@@ -1,14 +1,15 @@
 import React,{Component} from "react";
 import {NavLink} from "react-router-dom";
 import logo from "../images/logo.svg";
-import cart from "../images/empty_cart.svg";
+import cartIco from "../images/empty_cart.svg";
 
 import CurrencySwitcher from "../components/CurrencySwitcher";
 
 
 export default class Header extends Component{
     render(){
-        const {currencyChanger} = this.props
+        const {currencyChanger} = this.props;
+        const {cart} = this.props.data
         const categoryList =  this.props.data.dataCategories.map(item => (
             <li key={item.name}>
                <NavLink to={`/${item.name}`} > { item.name}</NavLink>
@@ -34,7 +35,8 @@ export default class Header extends Component{
                      <CurrencySwitcher currencies = {currencyList} currencyChanger = {currencyChanger} state = {this.props.data} />
                  </div>
                 <span>
-                    <img src={cart} width="20" height="20" alt="cart icon" title="cart icon"/>
+                    <img src={cartIco} width="20" height="20" alt="cart icon" title="cart icon"/>
+                    <span> Items count in cart: {cart.length} </span>
                 </span>
             </nav>
         </header>
