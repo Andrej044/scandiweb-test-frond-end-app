@@ -34,9 +34,15 @@ export default class App extends Component{
         }))
     }
 
-    addToCart = e => {
+    addToCart = (e, product= {}) => {
+        e.preventDefault();
         const cartArr = this.state.cart;
-        cartArr.push({})
+        cartArr.push({
+            name: product.name,
+            brand: product.brand,
+            attributes: [],
+            price: product.price.amount
+        })
         this.setState({
             cart: cartArr
         })
@@ -126,6 +132,7 @@ currencies{
                 data= {this.state.dataCategories}
                 currency={this.state.currencies}
                 findCurrency={this.findCurrency}
+                handleClick = {this.addToCart}
             />
           </BrowserRouter>
         )
