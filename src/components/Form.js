@@ -3,22 +3,33 @@ import React,{Component}  from "react";
 
 export default class Form extends Component{
     state = {
-        value: null,
+        selectedOption: null,
+    }
+    handleChange = (e) => {
+            this.setState({
+                selectedOption: e.target.value,
+            })
     }
 
-    handleClick = (e) => {
+    componentDidMount() {
+        let firstElem = this.props.attribute.items[0];
         this.setState({
-            value: e.target.value
+            selectedOption:firstElem.value,
         })
     }
 
     render(){
         const {attribute} = this.props;
-        console.log(attribute)
-        const input = attribute.items.map(attr => (
+        const input = attribute.items.map( attr => (
                 <label key={attr.id}>
                     {attr.displayValue}
-                    <input type="radio" value={attr.value} name={attribute.name} onClick={this.handleClick}/>
+                    <input
+                        type="radio"
+                        value={attr.value}
+                        name={attribute.name}
+                        onChange={this.handleChange}
+                        checked={this.state.selectedOption === attr.value}
+                         />
                 </label>
 
         ))
