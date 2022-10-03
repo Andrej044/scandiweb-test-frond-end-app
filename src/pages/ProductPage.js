@@ -1,6 +1,5 @@
 import React,{Component} from "react";
-import SizePicker from "../components/SizePicker";
-import ColorPicker from "../components/ColorPicker";
+
 import Price from "../components/Price";
 import Attributes from "../layouts/Attributes";
 
@@ -36,7 +35,7 @@ export default class ProductPage extends Component{
     }
 
     render() {
-        const {findCurrency, currency} = this.props.dataCategories;
+        const {findCurrency, currency, handleClick} = this.props.dataCategories;
         const  findedProduct = this.getProductByPathName();
         const photoThumbnails = findedProduct[0] === undefined ? (<li>Photo not found</li>) : findedProduct[0].gallery.map((photoUrl, index) => (
             <li className="product-thumbnail" key={index} >
@@ -71,15 +70,17 @@ export default class ProductPage extends Component{
                     <h2>{brand}</h2>
                     <p>{name}</p>
                     <Attributes attributes={attributes}/>
-                    {/*<SizePicker/>*/}
-                    {/*<ColorPicker/>*/}
-
                     <div className="price">
                         <h3>Price:</h3>
                         <Price price={price[0]}/>
                     </div>
-                    <button>Add to card</button>
-
+                    <button onClick={(e) => {
+                        handleClick(e, {
+                            brand:brand,
+                            name:name,
+                            price:price[0]
+                        })
+                    }}>Add to card</button>
                     <div className="description" dangerouslySetInnerHTML={{__html:description}}></div>
                 </section>
             </div>
