@@ -5,9 +5,9 @@ import ColorPicker from "../components/ColorPicker";
 import SizePicker from "../components/SizePicker";
 
 export default class Attributes extends Component{
+
     render() {
         const {attributes} = this.props;
-        // console.log(attributes)
         const attributesList = attributes.map( attr => (
             <div key={attr.id}>
                  <h3 >{attr.id}:</h3>
