@@ -10,7 +10,6 @@ export default class Product extends Component{
                 <img src= {this.props.product.gallery[0]} alt=""/>
                 <p>{this.props.product.brand} {this.props.product.name}</p>
                 <p><Price price={currency}/></p>
-                {/*<p>{currency.currency.symbol}<span>{currency.amount}</span></p>*/}
             </div>
         )
     }
