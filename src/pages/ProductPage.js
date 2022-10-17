@@ -41,7 +41,6 @@ export default class ProductPage extends Component{
             arrAttributes.forEach((attr, index) => {
                 if(attribute.name === attr.name){
                      arrAttributes.splice(index,1);
-                     console.log(arrAttributes)
                 }
             })
        }
