@@ -11,7 +11,7 @@ export default class Attributes extends Component{
         const attributesList = attributes.map( attr => (
             <div key={attr.id}>
                  <h3 >{attr.id}:</h3>
-                <Form attribute = {attr} />
+                <Form attribute = {attr}  addAttributes = {this.props.addAttributes} />
             </div>
         ))
 
