@@ -9,6 +9,7 @@ import  "../styles/ProductPage.css"
 export default class ProductPage extends Component{
     state = {
         photoSrc: "",
+        selectedAttributes: []
     }
     componentDidMount() {
         const product = this.getProductByPathName();
@@ -34,6 +35,37 @@ export default class ProductPage extends Component{
         })
     }
 
+    addAttributes = (attribute = {}) => {
+        let [arrAttributes] = [this.state.selectedAttributes];
+
+       if(arrAttributes.length > 1) {
+            arrAttributes.forEach((attr, index) => {
+                if(attribute.name === attr.name){
+                     arrAttributes.splice(index,1);
+                     console.log(arrAttributes)
+                }
+            })
+       }
+
+        arrAttributes.push({
+            name: attribute.name,
+            value: attribute.value
+        })
+        this.setState({
+            selectedAttributes: arrAttributes
+        })
+    }
+
+    clearAttributes = () => {
+        const arrAttributes = this.state.selectedAttributes.map(attribute =>{
+                return attribute;
+            })
+
+        this.setState({
+            selectedAttributes: arrAttributes
+        });
+    }
+
     render() {
         const {findCurrency, currency, handleClick} = this.props.dataCategories;
         const  findedProduct = this.getProductByPathName();
@@ -42,15 +74,13 @@ export default class ProductPage extends Component{
                 <img onClick={this.changePhotoHandler} src={photoUrl} alt=""/>
             </li>
         ));
-        // console.log(findedProduct[0].attributes);
-        // console.log(this.props)
 
         const brand = findedProduct[0] === undefined ? "Brand not found" : findedProduct[0].brand;
         const name = findedProduct[0] === undefined ? "Name not found" : findedProduct[0].name;
         const description = findedProduct[0] === undefined ? (<p>Description not found</p>) : findedProduct[0].description;
         const price = findedProduct[0] === undefined ? ["Price not found"] : findCurrency(findedProduct[0].prices, currency.label);
         const attributes = findedProduct[0] === undefined ? [] : findedProduct[0].attributes;
-
+        const selectedAttributes = this.state.selectedAttributes;
 
         return (
             <div className="product-page">
@@ -69,7 +99,7 @@ export default class ProductPage extends Component{
                 <section>
                     <h2>{brand}</h2>
                     <p>{name}</p>
-                    <Attributes attributes={attributes}/>
+                    <Attributes attributes={attributes} addAttributes = {this.addAttributes}/>
                     <div className="price">
                         <h3>Price:</h3>
                         <Price price={price[0]}/>
@@ -78,8 +108,9 @@ export default class ProductPage extends Component{
                         handleClick(e, {
                             brand:brand,
                             name:name,
-                            price:price[0]
-                        })
+                            price:price[0],
+                            attributes:selectedAttributes,
+                        }, this.clearAttributes())
                     }}>Add to card</button>
                     <div className="description" dangerouslySetInnerHTML={{__html:description}}></div>
                 </section>
