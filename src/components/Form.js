@@ -5,10 +5,18 @@ export default class Form extends Component{
     state = {
         selectedOption: null,
     }
+
     handleChange = (e) => {
+       if(e.target.checked){
+           this.props.addAttributes({
+                name: e.target.name,
+                value: e.target.value,
+            });
+       }
             this.setState({
                 selectedOption: e.target.value,
             })
+
     }
 
     componentDidMount() {
@@ -16,7 +24,12 @@ export default class Form extends Component{
         this.setState({
             selectedOption:firstElem.value,
         })
+        this.props.addAttributes({
+            name: this.props.attribute.name,
+            value:this.props.attribute.items[0].value
+        })
     }
+
 
     render(){
         const {attribute} = this.props;
