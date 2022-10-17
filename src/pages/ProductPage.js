@@ -37,8 +37,7 @@ export default class ProductPage extends Component{
 
     addAttributes = (attribute = {}) => {
         let [arrAttributes] = [this.state.selectedAttributes];
-
-       if(arrAttributes.length > 1) {
+       if(arrAttributes.length > 0) {
             arrAttributes.forEach((attr, index) => {
                 if(attribute.name === attr.name){
                      arrAttributes.splice(index,1);
