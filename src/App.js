@@ -1,12 +1,78 @@
 import React, {Component} from "react";
 import {gql} from "@apollo/client";
+import {graphql} from "@apollo/client/react/hoc";
 import {BrowserRouter} from "react-router-dom";
 
 import Header from "./layouts/Header";
 import Main from "./layouts/Main";
 
 
-export default class App extends Component{
+const GET_DATA = gql`
+    query{
+        categories{
+            name
+            products{
+                id
+                name
+                inStock
+                gallery
+                description
+                category
+                attributes{
+                    id
+                    name
+                    type
+                    items{
+                        displayValue
+                        value
+                        id
+                    }
+                }
+                prices{
+                    currency{
+                        label
+                        symbol
+                    }
+                    amount
+                }
+                brand
+            }
+        }
+        category{
+            name
+            products{
+                id
+                name
+                inStock
+                gallery
+                description
+                category
+                attributes{
+                    id
+                    name
+                    type
+                    items{
+                        displayValue
+                        value
+                        id
+                    }
+                }
+                prices{
+                    currency{
+                        label
+                        symbol
+                    }
+                    amount
+                }
+                brand
+            }
+        }
+        currencies{
+            label
+        }
+    }`
+
+class App extends Component{
     state = {
         dataCategories: [],
         dataCurrencies: [],
@@ -36,93 +102,26 @@ export default class App extends Component{
 
     addToCart = (e, product= {}) => {
         e.preventDefault();
-        const cartArr = this.state.cart;
-        cartArr.push({
-            name: product.name,
-            brand: product.brand,
-            attributes: [],
-            price: product.price.amount
-        })
-        this.setState({
-            cart: cartArr
-        })
+        if(this.state.cart.length === 0 ) {
+            this.setState({cart: [...this.state.cart, product]})
+            return
+        } else {
+            this.setState({cart: [...this.state.cart, product]});
+        }
+
     }
 
     componentDidMount() {
-      this.props.client
-          .query({
-              query:gql`
-              query{
-               categories{
-  name
-  products{
-    id
-    name
-    inStock
-    gallery
-    description
-    category
-    attributes{
-      id
-      name
-      type
-      items{
-        displayValue
-        value
-        id
-      }
-    }
-    prices{
-      currency{
-        label
-        symbol
-      }
-      amount
-    }
-    brand 
+        if(this.props.data.loading) console.log("loading"); // Make a loading page when data not loading yet
   }
-} 
- category{
-  name
-  products{
-    id
-    name
-    inStock
-    gallery
-    description
-    category
-    attributes{
-      id
-      name
-      type
-      items{
-        displayValue
-        value
-        id
-      }
-    }
-    prices{
-      currency{
-        label
-        symbol
-      }
-      amount
-    }
-    brand 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevState.dataCategories.length > 0) return
+        else this.setState({
+            dataCategories: this.props.data.categories,
+            dataCurrencies: this.props.data.currencies
+        });
   }
-} 
-currencies{
-  label
-  symbol
-}}`
-          })
-          .then(result => {
-              this.setState({
-                  dataCategories: result.data.categories,
-                  dataCurrencies: result.data.currencies
-              })
-          })
-  }
+
     render(){
         return(
           <BrowserRouter>
@@ -138,3 +137,6 @@ currencies{
         )
   }
 }
+
+const AppWidthData = graphql(GET_DATA)(App)
+export default AppWidthData;
