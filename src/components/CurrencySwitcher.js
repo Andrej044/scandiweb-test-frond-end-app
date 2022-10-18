@@ -14,11 +14,7 @@ export default class CurrencySwitcher extends Component {
         const elem = document.querySelector(".currency-item:first-child");
         const span = document.querySelector(".currency__visible")
 
-        if(event.target === elem){
-            this.setState({
-                isShow:false
-            })
-        } else if(event.target != span) {
+        if(event.target === elem || event.target != span){
             this.setState({
                 isShow:false
             })
@@ -35,12 +31,14 @@ export default class CurrencySwitcher extends Component {
     render(){
         const currencyChanger = this.props.currencyChanger;
         const {symbol:currencySymbol} = this.props.state.currencies;
-
-        const currenciesList = this.props.currencies.map((currency,index) => (
+        // console.log(currencySymbol)
+        const currenciesList = this.props.currencies.map((currency,index) => {
+            // console.log(currency)
+            return (
             <li
                 className="currency-item"
                 onClick={() => {
-                currencyChanger(currency.currencyLabel,currency.currencySymbol );
+                currencyChanger(currency.currencyLabel, currency.currencySymbol );
                 }}
                 id = {index}
                 key= {currency.currencyLabel}
@@ -48,7 +46,7 @@ export default class CurrencySwitcher extends Component {
             >
                 {currency.currencySymbol} {currency.currencyLabel}
             </li>
-        ));
+        )});
 
         return(
             <>
