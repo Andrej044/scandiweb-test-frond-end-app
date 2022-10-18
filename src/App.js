@@ -69,6 +69,7 @@ const GET_DATA = gql`
         }
         currencies{
             label
+            symbol
         }
     }`
 
