@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 
 import Price from "../components/Price";
+import ProductTitle from "../components/ProductTitle";
 import Attributes from "../layouts/Attributes";
 
 import  "../styles/ProductPage.css"
@@ -95,8 +96,7 @@ export default class ProductPage extends Component{
                     </div>
                 </section>
                 <section>
-                    <h2>{brand}</h2>
-                    <p>{name}</p>
+                    <ProductTitle brand = {brand} name = {name}/>
                     <Attributes attributes={attributes} addAttributes = {this.addAttributes}/>
                     <div className="price">
                         <h3>Price:</h3>
