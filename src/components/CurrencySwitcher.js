@@ -14,7 +14,7 @@ export default class CurrencySwitcher extends Component {
         const elem = document.querySelector(".currency-item:first-child");
         const span = document.querySelector(".currency__visible")
 
-        if(event.target === elem || event.target != span){
+        if(event.target === elem || event.target !== span){
             this.setState({
                 isShow:false
             })
