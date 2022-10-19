@@ -7,11 +7,11 @@ import SizePicker from "../components/SizePicker";
 export default class Attributes extends Component{
 
     render() {
-        const {attributes} = this.props;
+        const attributes = [...this.props.attributes];
         const attributesList = attributes.map( attr => (
             <div key={attr.id}>
                  <h3 >{attr.id}:</h3>
-                <Form attribute = {attr}  addAttributes = {this.props.addAttributes} />
+                <Form attribute = {attr} selectedAttributes = {this.props.selectedAttributes} addAttributes = {this.props.addAttributes} />
             </div>
         ))
 
