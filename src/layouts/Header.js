@@ -4,9 +4,18 @@ import logo from "../images/logo.svg";
 import cartIco from "../images/empty_cart.svg";
 
 import CurrencySwitcher from "../components/CurrencySwitcher";
-
+import MiniCart from "../components/MiniCart";
 
 export default class Header extends Component{
+    state = {
+        isVisibleCart : false
+    }
+    onClickHandler = (e) => {
+
+        this.setState({
+            isVisibleCart : !this.state.isVisibleCart
+        })
+    }
     render(){
         const {currencyChanger} = this.props;
         const {cart} = this.props.data
@@ -34,10 +43,11 @@ export default class Header extends Component{
                  <div className="currencySwitcher">
                      <CurrencySwitcher currencies = {currencyList} currencyChanger = {currencyChanger} state = {this.props.data} />
                  </div>
-                <span>
+                <div onClick={this.onClickHandler}>
                     <img src={cartIco} width="20" height="20" alt="cart icon" title="cart icon"/>
                     <span> Items count in cart: {cart.length} </span>
-                </span>
+                </div>
+                {this.state.isVisibleCart ? <MiniCart cart = {cart} /> : null }
             </nav>
         </header>
         )
