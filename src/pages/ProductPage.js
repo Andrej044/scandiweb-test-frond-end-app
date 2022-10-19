@@ -108,6 +108,7 @@ export default class ProductPage extends Component{
                             name:name,
                             price:price[0],
                             attributes:selectedAttributes,
+                            allAttributes : attributes
                         }, this.clearAttributes())
                     }}>Add to card</button>
                     <div className="description" dangerouslySetInnerHTML={{__html:description}}></div>
