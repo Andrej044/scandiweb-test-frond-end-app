@@ -3,37 +3,61 @@ import React,{Component}  from "react";
 
 export default class Form extends Component{
     state = {
-        selectedOption: null,
+        selectedOptionValue: null,
+        isChecked: true
     }
 
     handleChange = (e) => {
-       if(e.target.checked){
+        if(this.state.isChecked === false) return
+        this.setState({
+            selectedOptionValue: e.target.value,
+            selectedOptionName: e.target.name
+        })
+        if(this.props.addAttributes === undefined) return;
+        if(e.target.checked){
            this.props.addAttributes({
                 name: e.target.name,
                 value: e.target.value,
             });
        }
-            this.setState({
-                selectedOption: e.target.value,
-            })
-
     }
 
     componentDidMount() {
-        let firstElem = this.props.attribute.items[0];
-        this.setState({
-            selectedOption:firstElem.value,
-        })
-        this.props.addAttributes({
-            name: this.props.attribute.name,
-            value:this.props.attribute.items[0].value
-        })
+        if (this.props.selectedAttributes === undefined){
+            let firstElem = this.props.attribute.items[0];
+
+            this.setState({
+                selectedOptionValue: firstElem.value,
+            })
+
+            if (this.props.addAttributes === undefined) return;
+
+            this.props.addAttributes({
+                name: this.props.attribute.name,
+                value: this.props.attribute.items[0].value
+            })
+        } else {
+            // Ты работаешь сейчас над тем что бы в корзине выбранные аттрибуты соответсвовали аттрибутам на странице товара
+            // и удалением возможности менять аттрибут
+            this.props.selectedAttributes.forEach(attribute => {
+                if (attribute.name === this.props.attribute.id ) {
+                    this.setState({
+                        selectedOptionValue: attribute.value,
+                        isChecked: false
+                    })
+                }
+            })
+        }
     }
+
 
 
     render(){
         const {attribute} = this.props;
-        const input = attribute.items.map( attr => (
+        // console.log(this.state.selectedOption)
+
+        const input = attribute.items.map( attr => {
+            return(
                 <label key={attr.id}>
                     {attr.displayValue}
                     <input
@@ -41,11 +65,11 @@ export default class Form extends Component{
                         value={attr.value}
                         name={attribute.name}
                         onChange={this.handleChange}
-                        checked={this.state.selectedOption === attr.value}
-                         />
+                        checked={this.state.selectedOptionValue === attr.value}
+                    />
                 </label>
-
-        ))
+            )
+        });
         return(
             <div className="form">
                 <form>
