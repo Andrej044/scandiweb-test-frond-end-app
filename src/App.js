@@ -111,6 +111,12 @@ class App extends Component{
         }
 
     }
+    duplicateProduct = (product = {}) => {
+        this.setState({cart: [...this.state.cart, product]})
+    }
+    removeDuplicateProduct = (product) => {
+        console.log(product)
+    }
 
     componentDidMount() {
         if(this.props.data.loading) console.log("loading"); // Make a loading page when data not loading yet
@@ -126,7 +132,12 @@ class App extends Component{
     render(){
         return(
           <BrowserRouter>
-            <Header data= {this.state} currencyChanger={this.handleCurrencyChange} />
+            <Header
+                data= {this.state}
+                currencyChanger={this.handleCurrencyChange}
+                duplicateProduct = {this.duplicateProduct}
+                removeDuplicateProduct = {this.removeDuplicateProduct}
+            />
             <h1 className="visualy-hidden">Online shop Scandiweb</h1>
             <Main
                 data= {this.state.dataCategories}
