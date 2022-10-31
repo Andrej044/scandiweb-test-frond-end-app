@@ -29,6 +29,10 @@ export default class Header extends Component{
             currencySymbol: item.symbol
             })
         )
+        let totalPrice = 0;
+        cart.forEach(item => {
+            totalPrice = totalPrice + item.price.amount
+        })
         return(
         <header>
             <nav>
@@ -47,7 +51,12 @@ export default class Header extends Component{
                     <img src={cartIco} width="20" height="20" alt="cart icon" title="cart icon"/>
                     <span> Items count in cart: {cart.length} </span>
                 </div>
-                {this.state.isVisibleCart ? <MiniCart cart = {cart} /> : null }
+                {this.state.isVisibleCart ? <MiniCart
+                    cart = {cart}
+                    totalPrice = {totalPrice}
+                    duplicateProduct = {this.props.duplicateProduct}
+                    removeDuplicateProduct = {this.props.removeDuplicateProduct}
+                /> : null }
             </nav>
         </header>
         )
