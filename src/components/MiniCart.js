@@ -63,7 +63,7 @@ export default class  MiniCart extends Component {
                        }}>-</button>
                    </div>
                    <div>
-                       <img src="" alt="thumbnail"/>
+                       <img src={item.photoThumbnails} alt="thumbnail"/>
                    </div>
                </li>
            )
