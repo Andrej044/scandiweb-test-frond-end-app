@@ -18,6 +18,7 @@ export default class Main extends Component{
                        <Route path = "/clothes" element={<ClothesPage dataCategories = {this.props}/>}/>
                        <Route path = "/tech" element={<TechPage dataCategories = {this.props}/>}/>
                        <Route path = "/product/:id" element={<ProductPage dataCategories = {this.props}/>}/>
+                        <Route path ="/cart" element={<div> Hello cart</div>}/>
                     </Routes>
                 </main>
         )
