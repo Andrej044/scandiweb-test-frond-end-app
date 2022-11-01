@@ -114,8 +114,15 @@ class App extends Component{
     duplicateProduct = (product = {}) => {
         this.setState({cart: [...this.state.cart, product]})
     }
+
     removeDuplicateProduct = (product) => {
-        console.log(product)
+        let cart = [...this.state.cart];
+        let indexProduct = cart.indexOf(product);
+        cart.splice(indexProduct,1)
+        this.setState({
+            cart: cart
+        })
+
     }
 
     componentDidMount() {
