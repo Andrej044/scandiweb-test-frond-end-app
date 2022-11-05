@@ -10,7 +10,7 @@ export default class Header extends Component{
     state = {
         isVisibleCart : false
     }
-    onClickHandler = (e) => {
+    onClickHandler = () => {
 
         this.setState({
             isVisibleCart : !this.state.isVisibleCart
@@ -18,13 +18,13 @@ export default class Header extends Component{
     }
     render(){
         const {currencyChanger} = this.props;
-        const {cart} = this.props.data
-        const categoryList =  this.props.data.dataCategories.map(item => (
+        const {cart} = this.props.stateData
+        const categoryList =  this.props.stateData.dataCategories.map(item => (
             <li key={item.name}>
                <NavLink to={`/${item.name}`} > { item.name}</NavLink>
             </li>
         ));
-        const currencyList =  this.props.data.dataCurrencies.map(item => ({
+        const currencyList =  this.props.stateData.dataCurrencies.map(item => ({
             currencyLabel: item.label,
             currencySymbol: item.symbol
             })
@@ -45,7 +45,7 @@ export default class Header extends Component{
                     </NavLink>
                 </span>
                  <div className="currencySwitcher">
-                     <CurrencySwitcher currencies = {currencyList} currencyChanger = {currencyChanger} state = {this.props.data} />
+                     <CurrencySwitcher currencies = {currencyList} currencyChanger = {currencyChanger} state = {this.props.stateData} />
                  </div>
                 <div onClick={this.onClickHandler}>
                     <img src={cartIco} width="20" height="20" alt="cart icon" title="cart icon"/>
