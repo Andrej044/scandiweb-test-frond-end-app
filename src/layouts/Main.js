@@ -5,6 +5,7 @@ import AllPage from "../pages/AllPage";
 import ClothesPage from "../pages/ClothesPage";
 import TechPage from "../pages/TechPage";
 import ProductPage from "../pages/ProductPage";
+import CartPage from "../pages/CartPage";
 
 
 
@@ -18,7 +19,12 @@ export default class Main extends Component{
                        <Route path = "/clothes" element={<ClothesPage dataCategories = {this.props}/>}/>
                        <Route path = "/tech" element={<TechPage dataCategories = {this.props}/>}/>
                        <Route path = "/product/:id" element={<ProductPage dataCategories = {this.props}/>}/>
-                        <Route path ="/cart" element={<div> Hello cart</div>}/>
+                       <Route path ="/cart" element={
+                           <CartPage
+                               cart = {this.props.stateData.cart}
+                               duplicateProduct = {this.props.duplicateProduct}
+                               removeDuplicateProduct = {this.props.removeDuplicateProduct}/>}
+                       />
                     </Routes>
                 </main>
         )
