@@ -105,7 +105,6 @@ class App extends Component{
         e.preventDefault();
         if(this.state.cart.length === 0 ) {
             this.setState({cart: [...this.state.cart, product]})
-            return
         } else {
             this.setState({cart: [...this.state.cart, product]});
         }
@@ -140,17 +139,20 @@ class App extends Component{
         return(
           <BrowserRouter>
             <Header
-                data= {this.state}
-                currencyChanger={this.handleCurrencyChange}
+                stateData = {this.state}
+                currencyChanger = {this.handleCurrencyChange}
                 duplicateProduct = {this.duplicateProduct}
                 removeDuplicateProduct = {this.removeDuplicateProduct}
             />
             <h1 className="visualy-hidden">Online shop Scandiweb</h1>
             <Main
-                data= {this.state.dataCategories}
-                currency={this.state.currencies}
-                findCurrency={this.findCurrency}
+                stateData = {this.state}
+                data = {this.state.dataCategories}
+                currency = {this.state.currencies}
+                findCurrency = {this.findCurrency}
                 handleClick = {this.addToCart}
+                duplicateProduct = {this.duplicateProduct}
+                removeDuplicateProduct = {this.removeDuplicateProduct}
             />
           </BrowserRouter>
         )
