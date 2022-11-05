@@ -109,6 +109,7 @@ export default class ProductPage extends Component{
                             price:price[0],
                             attributes:selectedAttributes,
                             allAttributes : attributes,
+                            allPhoto:findedProduct[0].gallery,
                             photoThumbnails: findedProduct[0].gallery[0]
                         }, this.clearAttributes())
                     }}>Add to card</button>
